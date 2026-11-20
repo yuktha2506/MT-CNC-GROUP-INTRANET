@@ -1,0 +1,69 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261118113634
+Username: MTG\administrator
+RunAs User: MTG\administrator
+Machine: SISRVR (Microsoft Windows NT 10.0.14393.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\server-plant\setup\server-plant-setup.ps1 -Source C:\server-plant\. -AppPath C:\server-plant -SiteIP 172.32.2.96 -Port 3001
+Process ID: 9104
+PSVersion: 5.1.14393.9685
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.9685
+BuildVersion: 10.0.14393.9685
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+==== 1/8  Checking IIS, URL Rewrite and ARR
+  [OK]   URL Rewrite is installed
+  [OK]   Application Request Routing is installed
+  [OK]   ARR proxy is switched on
+
+==== 2/8  Stopping the old MTCNC v3 service (it is replaced by server-plant)
+  [OK]   Task 'MTCNC-Intranet' stopped and disabled (not deleted)
+  [OK]   Port 3000 is free
+
+==== 3/8  Copying the application to C:\server-plant
+  [OK]   Files copied (an existing .env is kept)
+
+==== 4/8  Node.js 22.22.0 (private copy for this app)
+  [OK]   Node v22.22.0 already present
+  [OK]   Packages present
+
+==== 5/8  Settings file (.env) and passwords
+  [OK]   ADMIN_PASSWORD_HASH already set - kept
+  [OK]   EMPLOYEE_PASSWORD_HASH already set - kept
+  [OK]   .env written (no BOM), readable only by SYSTEM and Administrators
+
+==== 6/8  Node background task 'Server-Plant'
+  [OK]   Node is listening on 127.0.0.1:3000 and starts automatically at boot
+
+==== 7/8  IIS site on port 3001
+  [OK]   Existing site 'MTCNC' now points to C:\server-plant (binding kept)
+  [OK]   Firewall allows TCP 3001 (port 3000 stays closed)
+
+==== 8/8  Checks
+  [OK]   Node health      200  {"status":"online","app":"MT CNC-Group - Microtech CNC Pvt. Ltd.","storage":"in-memory","loginIdPolicy":"configured-account-match"}
+  [OK]   Home page        200  http://172.32.2.96:3001/
+  [OK]   IIS -> Node API  200
+  [OK]   Socket.IO script 200
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /.env
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /backend.js
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /api.js
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /package.json
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /run-server-plant.cmd
+PS>TerminatingError(Invoke-WebRequest): "The remote server returned an error: (404) Not Found."
+  [OK]   Blocked          404  /logs/server.log
+
+  ALL GOOD - open http://172.32.2.96:3001/ in a browser
+**********************
+Windows PowerShell transcript end
+End time: 20261118113652
+**********************

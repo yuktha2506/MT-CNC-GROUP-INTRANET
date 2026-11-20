@@ -1,0 +1,57 @@
+MT CNC-Group Intranet - update package (18 Nov 2026)
+======================================================
+
+WHAT TO COPY
+  api.js, frontend.html, web.config, SET-ETIME-LOGIN.bat,
+  FIX-ATTENDANCE.bat, CREATE-CIRCULAR-FOLDER.bat          ->  C:\server-plant
+  logos\company.png                                       ->  C:\server-plant\logos\
+  Install-MTCNC-Browser-Launcher.bat                      ->  run once on each employee PC
+                                                              (also on the IT Utilities page)
+
+STEPS ON THE SERVER
+  1. Copy the files above (replace the old ones).
+  2. Right-click SET-ETIME-LOGIN.bat > Run as administrator.
+     The ID (itadmin) and password are already filled in at the top of the
+     file. It saves them to .env, restarts the intranet and checks it.
+  3. Open the Today page. Within a minute the Biometric attendance tiles
+     (Active Employees, Present Employees, Online Devices, Offline Devices)
+     show the eTimeTrack figures and the Device status table lists every device.
+
+eTimeTrack IS READ-ONLY FROM THE INTRANET
+  The server only opens the dashboard page and signs in. It never presses any
+  other button, so no attendance record can be changed. The password stays in
+  .env on the server and is never sent to employees' browsers.
+
+WHAT IS IN THIS VERSION
+  - Compact classic fonts, aligned links, company logo, logos folder
+  - Business apps: choose Edge / Chrome / Firefox (MT CNC launcher)
+  - SOPs & documents grouped by department
+  - All Departments Circular Board + IT / Quality / Marketing / HR pages,
+    documents from \\172.32.2.12\Ftp (IT, Quality, Marketing, HR folders)
+  - Employee Details: 13 columns, Aadhaar shows last 4 digits only
+  - Helpdesk: IT incident tickets with name, emp code, department,
+    contact numbers and remote ID (contact details visible to admins only)
+  - IT Utilities: Quick Assist, AnyDesk, UltraViewer, TeamViewer QuickSupport
+    (portable copies go in \\172.32.2.12\Ftp\Utilities)
+  - Header: Selvaraj A, IT Dept, Ph: 9488128416
+  - All shifts: EM, FS, GS, MS, SP, SS
+  - Circular attachments: admins attach a PDF, Word, Excel, PowerPoint, JPG or
+    PNG file (up to 20 MB) when posting a circular. Files are saved on this
+    IIS server in C:\server-plant\Circulars\<Department>\ (run
+    CREATE-CIRCULAR-FOLDER.bat once) and shown on the circular with View /
+    Download. IIS never serves the folder directly.
+  - Today: Biometric attendance tiles from eTimeTrack, plus the live Device
+    status table (DeviceSName, DeviceFName, Serial No., Location, Last Ping,
+    Status) with Location / Status filters, refreshed every 30 seconds
+
+IF SOMETHING IS WRONG
+  Tiles say "API endpoint not found":
+      the old api.js is still running. Copy api.js again, then right-click
+      FIX-ATTENDANCE.bat > Run as administrator.
+  Biometric tiles say "did not accept the user name or password":
+      run SET-ETIME-LOGIN.bat again (login name: itadmin).
+  Tiles say "dashboard figures were not found", or the device list is empty:
+      send C:\server-plant\logs\etime-last-page.html to Claude. It is a copy of
+      the eTimeTrack page the server read (no password in it).
+  Department pages say "Access to the folder was denied":
+      give the server's computer account read access to \\172.32.2.12\Ftp.

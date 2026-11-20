@@ -1,0 +1,4 @@
+# Department credential hashes, session-version state, and audit trail.
+runtime/department-auth.json
+runtime/department-audit.jsonl
+runtime/department-auth.*.tmp
